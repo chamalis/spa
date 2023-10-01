@@ -1,0 +1,56 @@
+# Containers sorted in a way that depicts the their dependencies
+version: '2'
+
+services:
+  db:
+    container_name: spa_db
+    build:
+      context: ./config/dockerdb
+      dockerfile: Dockerfile
+    env_file: .env
+    restart: unless-stopped
+    volumes:
+      - raw_data:/var/lib/postgresql/data
+    ports:
+      # for development expose 5432 to host:12345
+      - "12345:5432"
+    expose:
+      # for production expose:5432 inside single-tier
+      - "5432"
+    networks:
+      - single-tier
+
+  backend:
+    build: .
+    container_name: spa
+    env_file: .env
+    restart: unless-stopped
+    depends_on:
+      - db
+    networks:
+      - single-tier
+    expose:
+      - "9999"  # for containers in single-tier
+
+  nginx:
+    build: ./config/nginx
+    container_name: nginx
+    restart: unless-stopped
+    volumes_from:
+      - backend
+    depends_on:
+      - backend
+    ports:
+        - "8888:8888"
+        # - "8443:443"
+    networks:
+      - single-tier
+
+volumes:
+  raw_data:
+    driver: local
+  pg-scripts:
+    driver: local
+
+networks:
+  single-tier:

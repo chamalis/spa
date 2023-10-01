@@ -1,0 +1,13 @@
+# base list used by all requirement files, except packaging
+
+fastapi==0.103.0
+
+pydantic<2.0.0
+
+SQLAlchemy==2.0.20
+alembic==1.11.3
+psycopg2-binary
+python-decouple==3.8
+uvicorn
+fastapi-pagination
+pandas==2.1.0

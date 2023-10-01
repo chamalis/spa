@@ -1,0 +1,3 @@
+# libraries needed for docker (production)
+
+-r base.txt

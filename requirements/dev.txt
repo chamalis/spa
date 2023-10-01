@@ -1,0 +1,6 @@
+# libraries Needed for the development environment
+
+-r base.txt
+
+pytest
+httpx
