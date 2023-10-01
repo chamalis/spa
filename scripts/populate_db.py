@@ -163,5 +163,4 @@ def main():
 
 if __name__ == '__main__':
     # this way this script can also be invoked directly
-    # TODO UNCOMMENT  main()
-    pass
+    main()
